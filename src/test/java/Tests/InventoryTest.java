@@ -101,4 +101,19 @@ public class InventoryTest extends Base {
                 "Order preview section (Review) was not displayed after clicking Next!");
         System.out.println("Successfully navigated to Order Preview screen.");
     }
+
+    @Test(priority = 9, dependsOnMethods = "testClickNext")
+    public void testExpressShipping() throws InterruptedException {
+        inventoryPage.selectExpressShipping();
+
+        Thread.sleep(1500);
+
+        String actualShipping = inventoryPage.getShippingAmount();
+        Assert.assertTrue(actualShipping.contains("R25.00"),
+                "Shipping line item did not show R25.00! Found: " + actualShipping);
+        String actualTotal = inventoryPage.getTotalAmount();
+        Assert.assertTrue(actualTotal.contains("R985.00"),
+                "Total did not update to R985.00! Found: " + actualTotal);
+        System.out.println("Shipping (R25.00) displayed and Total updated to " + actualTotal);
+    }
 }

@@ -131,4 +131,25 @@ public class InventoryPage {
     public boolean isOrderPreviewDisplayed() {
         return orderPreviewSection.isDisplayed();
     }
+
+    @FindBy(id = "shipping-express")
+    private WebElement expressShippingBtn;
+
+    @FindBy(id = "breakdown-shipping-value")
+    private WebElement expressShippingAmount;
+
+    @FindBy(id = "breakdown-total-value")
+    private WebElement totalAmountLabel;
+
+    public void selectExpressShipping() {
+        expressShippingBtn.click();
+    }
+
+    public String getShippingAmount() {
+        return expressShippingAmount.getText().trim();
+    }
+
+    public String getTotalAmount() {
+        return totalAmountLabel.getText().trim();
+    }
 }
