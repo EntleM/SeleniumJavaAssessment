@@ -152,4 +152,18 @@ public class InventoryPage {
     public String getTotalAmount() {
         return totalAmountLabel.getText().trim();
     }
+
+    @FindBy(id = "warranty-option-1yr")
+    private WebElement oneYearWarrantyBtn;
+
+    @FindBy(id = "breakdown-warranty-value")
+    private WebElement warrantyAmountLabel;
+
+    public void selectOneYearWarranty() {
+        oneYearWarrantyBtn.click();
+    }
+
+    public String getWarrantyAmount() {
+        return warrantyAmountLabel.getText().trim();
+    }
 }

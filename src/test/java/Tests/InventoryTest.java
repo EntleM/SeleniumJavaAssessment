@@ -116,4 +116,18 @@ public class InventoryTest extends Base {
                 "Total did not update to R985.00! Found: " + actualTotal);
         System.out.println("Shipping (R25.00) displayed and Total updated to " + actualTotal);
     }
+
+    @Test(priority = 10, dependsOnMethods = "testExpressShipping")
+    public void testOneYearWarranty() throws InterruptedException {
+        inventoryPage.selectOneYearWarranty();
+        Thread.sleep(1500);
+
+        String actualWarrantyFee = inventoryPage.getWarrantyAmount();
+        Assert.assertTrue(actualWarrantyFee.contains("R49.00"),
+                "Warranty line item did not show R49.00! Found: " + actualWarrantyFee);
+        String actualTotal = inventoryPage.getTotalAmount();
+        Assert.assertTrue(actualTotal.contains("R1034.00"),
+                "Total did not update to R1034.00 Found: " + actualTotal);
+        System.out.println("1 Year Warranty (+R49.00) added. Total: " + actualTotal);
+    }
 }
