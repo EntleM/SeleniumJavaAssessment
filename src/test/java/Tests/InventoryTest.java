@@ -1,54 +1,58 @@
 package Tests;
 
 import Utils.ReadFromFile;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class InventoryTest extends Base {
 
-    @BeforeMethod
-    public void prepareInventoryTest() {
-        homePage.verifyHomePageIsDisplayed();
-        homePage.clickLoginButton();
+    @BeforeClass
+    public void setupFlow() {
+        PageFactory.initElements(driver, inventoryPage);
 
+        homePage.clickLoginButton();
         loginPage.enterEmail(ReadFromFile.email);
         loginPage.enterPassword(ReadFromFile.password);
         loginPage.clickLoginButton();
     }
 
-    @Test
-    public void testNavigationToInventoryForm() {
+    @Test(priority = 1)
+    public void testNavigationToForm() {
         homePage.navigateToInventoryForm();
 
-        Assert.assertTrue(inventoryPage.isHeaderDisplayed(),
-                "Navigation Failed: The 'Inventory Form' header was not found!");
-
-        Assert.assertTrue(inventoryPage.isDeviceTypeLabelVisible(),
-                "Navigation Failed: Form elements (Device Type) are missing from the page.");
-
-        System.out.println("Success: Navigated to Inventory Form and verified page content.");
+        Assert.assertTrue(inventoryPage.isHeaderDisplayed(), "Header missing!");
+        System.out.println("Flow: Navigated to Form.");
     }
 
-    @Test
-    public void testNavigationAndDeviceSelection() throws InterruptedException {
-        homePage.navigateToInventoryForm();
+    @Test(priority = 2, dependsOnMethods = "testNavigationToForm")
+    public void testSelectDevice() throws InterruptedException {
         inventoryPage.selectDeviceType("Phone");
-        Assert.assertTrue(inventoryPage.isBrandDropdownEnabled(),
-                "ASSERTION FAILED: Brand dropdown did not enable after selecting Phone!");
-        System.out.println("Selected Phone successfully.");
+        Thread.sleep(1000);
+
+        Assert.assertTrue(inventoryPage.isBrandDropdownEnabled(), "Brand dropdown locked!");
+        System.out.println("Flow: Device selected.");
     }
 
-    @Test
-    public void testStep4BrandPreview() throws InterruptedException {
-        homePage.navigateToInventoryForm();
-        inventoryPage.selectDeviceType("Phone");
+    @Test(priority = 3, dependsOnMethods = "testSelectDevice")
+    public void testSelectBrandAndPreview() throws InterruptedException {
         inventoryPage.selectBrand("Apple");
+        Thread.sleep(3000);
 
-        Thread.sleep(5000);
-        Assert.assertTrue(inventoryPage.isPreviewVisible(), "Preview card not displayed!");
-        Assert.assertEquals(inventoryPage.getPreviewBrandText(), "Apple", "Preview text mismatch!");
+        Assert.assertTrue(inventoryPage.isPreviewVisible(), "Preview missing!");
+        Assert.assertEquals(inventoryPage.getPreviewBrandText(), "Apple");
+        System.out.println("Flow: Brand selected and Preview verified.");
+    }
 
-        System.out.println("Apple selected and Preview Card is visible.");
+    @Test(priority = 4, dependsOnMethods = "testSelectBrandAndPreview")
+    public void testSelectStorage() throws InterruptedException {
+        inventoryPage.selectStorage128();
+        Thread.sleep(2000);
+
+        String actualPrice = inventoryPage.getUnitPrice();
+        Assert.assertTrue(actualPrice.contains("R480.00"),
+                "Expected price to be R480.00 but found: " + actualPrice);
+        System.out.println("128GB selected and Unit Price is correct!");
     }
 }

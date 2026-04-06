@@ -61,4 +61,19 @@ public class InventoryPage {
     public String getPreviewBrandText() {
         return previewBrandName.getText();
     }
+
+    @FindBy(id = "storage-128GB")
+    private WebElement storage128RadioButton;
+
+    @FindBy(xpath = "//*[@id=\"unit-price-value\"]")
+    private WebElement unitPriceValue;
+
+    public void selectStorage128() {
+        storage128RadioButton.click();
+    }
+
+    public String getUnitPrice() {
+        return unitPriceValue.getText();
+    }
+
 }
