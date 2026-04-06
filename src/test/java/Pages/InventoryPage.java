@@ -76,4 +76,19 @@ public class InventoryPage {
         return unitPriceValue.getText();
     }
 
+    @FindBy(id = "color")
+    private WebElement colorDropdown;
+
+    @FindBy(xpath = "//*[@id=\"device-preview\"]/div/div/div[3]")
+    private WebElement previewColorText;
+
+    public void selectColor(String colorName) {
+        Select select = new Select(colorDropdown);
+        select.selectByVisibleText(colorName);
+    }
+
+    public String getPreviewColorText() {
+        return previewColorText.getText();
+    }
+
 }

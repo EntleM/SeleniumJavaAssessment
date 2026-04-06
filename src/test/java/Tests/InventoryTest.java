@@ -55,4 +55,16 @@ public class InventoryTest extends Base {
                 "Expected price to be R480.00 but found: " + actualPrice);
         System.out.println("128GB selected and Unit Price is correct!");
     }
+
+    @Test(priority = 5, dependsOnMethods = "testSelectStorage")
+    public void testStep6ColorSelection() throws InterruptedException {
+        inventoryPage.selectColor("Blue");
+        Thread.sleep(2000);
+
+        String actualColor = inventoryPage.getPreviewColorText();
+
+        Assert.assertTrue(actualColor.contains("blue"),
+                "Preview color text did not update to Blue! Found: " + actualColor);
+        System.out.println("Color 'Blue' selected and preview updated.");
+    }
 }
