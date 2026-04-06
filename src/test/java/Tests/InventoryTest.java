@@ -79,4 +79,26 @@ public class InventoryTest extends Base {
                 "Subtotal did not update to R960.00! Found: " + actualSubtotal);
         System.out.println("Quantity '2' entered and Subtotal is correct.");
     }
+
+    @Test(priority = 7, dependsOnMethods = "testQuantityAndSubtotal")
+    public void testAddressEntry() throws InterruptedException {
+        String expectedAddress = "123 Test Street";
+        inventoryPage.enterAddress(expectedAddress);
+        Thread.sleep(500);
+
+        String actualAddress = inventoryPage.getEnteredAddress();
+        Assert.assertEquals(actualAddress, expectedAddress,
+                "Address field was not filled correctly!");
+        System.out.println("Address field contains: " + actualAddress);
+    }
+
+    @Test (priority = 8, dependsOnMethods = "testAddressEntry")
+    public void testClickNext() throws InterruptedException {
+        inventoryPage.clickNext();
+        Thread.sleep(2000);
+
+        Assert.assertTrue(inventoryPage.isOrderPreviewDisplayed(),
+                "Order preview section (Review) was not displayed after clicking Next!");
+        System.out.println("Successfully navigated to Order Preview screen.");
+    }
 }

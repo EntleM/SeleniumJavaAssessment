@@ -106,4 +106,29 @@ public class InventoryPage {
         return subtotalAmount.getText().trim();
     }
 
+    @FindBy(id = "address")
+    private WebElement addressField;
+
+    @FindBy(id = "inventory-next-btn")
+    private WebElement nextButton;
+
+    @FindBy(id = "review-sections-container") // Use an element that appears after clicking Next
+    private WebElement orderPreviewSection;
+
+    public void enterAddress(String address) {
+        addressField.clear();
+        addressField.sendKeys(address);
+    }
+
+    public String getEnteredAddress() {
+        return addressField.getAttribute("value");
+    }
+
+    public void clickNext() {
+        nextButton.click();
+    }
+
+    public boolean isOrderPreviewDisplayed() {
+        return orderPreviewSection.isDisplayed();
+    }
 }
