@@ -157,4 +157,14 @@ public class InventoryTest extends Base {
                 "Pop-up appeared but 'Order Details' section is missing!");
         System.out.println("Order confirmed and success toast is visible.");
     }
+
+    @Test(priority = 13, dependsOnMethods = "testConfirmPurchase")
+    public void test4ViewInvoiceHistory() throws InterruptedException {
+        inventoryPage.clickViewInvoice();
+        Thread.sleep(1500);
+
+        Assert.assertTrue(inventoryPage.isInvoiceHistoryPanelDisplayed(),
+                "Invoice History panel did not appear after clicking View Invoice!");
+        System.out.println("Invoice History panel is visible.");
+    }
 }

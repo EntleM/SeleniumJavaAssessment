@@ -206,4 +206,21 @@ public class InventoryPage {
     public String getToastMessageText() {
         return orderDetails.getText().trim();
     }
+
+    @FindBy(id = "view-history-btn")
+    private WebElement viewInvoiceBtn;
+
+    @FindBy(id = "invoice-history-panel")
+    private WebElement invoiceHistoryPanel;
+
+    @FindBy(id = "invoice-history-header")
+    private WebElement invoiceHistoryHeader;
+
+    public void clickViewInvoice() {
+        viewInvoiceBtn.click();
+    }
+
+    public boolean isInvoiceHistoryPanelDisplayed() {
+        return invoiceHistoryPanel.isDisplayed() && invoiceHistoryHeader.isDisplayed();
+    }
 }
