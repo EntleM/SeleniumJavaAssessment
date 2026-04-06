@@ -91,4 +91,19 @@ public class InventoryPage {
         return previewColorText.getText();
     }
 
+    @FindBy(id = "quantity")
+    private WebElement quantityInput;
+
+    @FindBy(id = "subtotal-label")
+    private WebElement subtotalAmount;
+
+    public void enterQuantity(String qty) {
+        quantityInput.clear();
+        quantityInput.sendKeys(qty);
+    }
+
+    public String getSubtotalText() {
+        return subtotalAmount.getText().trim();
+    }
+
 }

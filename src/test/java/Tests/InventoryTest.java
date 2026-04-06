@@ -57,7 +57,7 @@ public class InventoryTest extends Base {
     }
 
     @Test(priority = 5, dependsOnMethods = "testSelectStorage")
-    public void testStep6ColorSelection() throws InterruptedException {
+    public void testColorSelection() throws InterruptedException {
         inventoryPage.selectColor("Blue");
         Thread.sleep(2000);
 
@@ -66,5 +66,17 @@ public class InventoryTest extends Base {
         Assert.assertTrue(actualColor.contains("blue"),
                 "Preview color text did not update to Blue! Found: " + actualColor);
         System.out.println("Color 'Blue' selected and preview updated.");
+    }
+
+    @Test(priority = 6, dependsOnMethods = "testColorSelection")
+    public void testQuantityAndSubtotal() throws InterruptedException {
+        inventoryPage.enterQuantity("2");
+        Thread.sleep(2000);
+
+        String actualSubtotal = inventoryPage.getSubtotalText();
+        String expectedSubtotal = "R960.00";
+        Assert.assertTrue(actualSubtotal.contains(expectedSubtotal),
+                "Subtotal did not update to R960.00! Found: " + actualSubtotal);
+        System.out.println("Quantity '2' entered and Subtotal is correct.");
     }
 }
