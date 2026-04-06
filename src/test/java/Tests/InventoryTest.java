@@ -144,4 +144,17 @@ public class InventoryTest extends Base {
                 "Total did not update to R930.60! Found: " + actualTotal);
         System.out.println("Discount applied. Final Total is R930.60.");
     }
+
+    @Test(priority = 12, dependsOnMethods = "testApplyDiscount")
+    public void testConfirmPurchase() throws InterruptedException {
+        inventoryPage.clickConfirmPurchase();
+        Thread.sleep(1000);
+
+        Assert.assertTrue(inventoryPage.isSuccessToastDisplayed(),
+                "Success pop-up did not appear!");
+        String toastText = inventoryPage.getToastMessageText();
+        Assert.assertTrue(toastText.contains("Order Details"),
+                "Pop-up appeared but 'Order Details' section is missing!");
+        System.out.println("Order confirmed and success toast is visible.");
+    }
 }

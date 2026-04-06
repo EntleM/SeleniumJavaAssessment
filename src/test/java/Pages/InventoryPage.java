@@ -185,4 +185,25 @@ public class InventoryPage {
     public String getDiscountAmount() {
         return discountAmountLabel.getText().trim();
     }
+
+    @FindBy(id = "purchase-device-btn")
+    private WebElement confirmPurchaseBtn;
+
+    @FindBy(id = "purchase-success-toast")
+    private WebElement successToast;
+
+    @FindBy(xpath = "//*[@id=\"purchase-success-toast\"]/div[2]/p")
+    private WebElement orderDetails;
+
+    public void clickConfirmPurchase() {
+        confirmPurchaseBtn.click();
+    }
+
+    public boolean isSuccessToastDisplayed() {
+        return successToast.isDisplayed();
+    }
+
+    public String getToastMessageText() {
+        return orderDetails.getText().trim();
+    }
 }
