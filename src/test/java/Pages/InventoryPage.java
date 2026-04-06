@@ -166,4 +166,23 @@ public class InventoryPage {
     public String getWarrantyAmount() {
         return warrantyAmountLabel.getText().trim();
     }
+
+    @FindBy(id = "discount-code")
+    private WebElement discountInputField;
+
+    @FindBy(id = "apply-discount-btn")
+    private WebElement applyDiscountBtn;
+
+    @FindBy(id = "breakdown-discount-value")
+    private WebElement discountAmountLabel;
+
+    public void applyDiscountCode(String code) {
+        discountInputField.clear();
+        discountInputField.sendKeys(code);
+        applyDiscountBtn.click();
+    }
+
+    public String getDiscountAmount() {
+        return discountAmountLabel.getText().trim();
+    }
 }
