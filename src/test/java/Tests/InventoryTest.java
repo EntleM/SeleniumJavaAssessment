@@ -29,7 +29,7 @@ public class InventoryTest extends Base {
     @Test(priority = 2, dependsOnMethods = "testNavigationToForm")
     public void testSelectDevice() throws InterruptedException {
         inventoryPage.selectDeviceType("Phone");
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         Assert.assertTrue(inventoryPage.isBrandDropdownEnabled(), "Brand dropdown locked!");
         System.out.println("Flow: Device selected.");
@@ -38,7 +38,7 @@ public class InventoryTest extends Base {
     @Test(priority = 3, dependsOnMethods = "testSelectDevice")
     public void testSelectBrandAndPreview() throws InterruptedException {
         inventoryPage.selectBrand("Apple");
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         Assert.assertTrue(inventoryPage.isPreviewVisible(), "Preview missing!");
         Assert.assertEquals(inventoryPage.getPreviewBrandText(), "Apple");
@@ -84,7 +84,7 @@ public class InventoryTest extends Base {
     public void testAddressEntry() throws InterruptedException {
         String expectedAddress = "123 Test Street";
         inventoryPage.enterAddress(expectedAddress);
-        Thread.sleep(500);
+        Thread.sleep(2000);
 
         String actualAddress = inventoryPage.getEnteredAddress();
         Assert.assertEquals(actualAddress, expectedAddress,
@@ -106,7 +106,7 @@ public class InventoryTest extends Base {
     public void testExpressShipping() throws InterruptedException {
         inventoryPage.selectExpressShipping();
 
-        Thread.sleep(1500);
+        Thread.sleep(2000);
 
         String actualShipping = inventoryPage.getShippingAmount();
         Assert.assertTrue(actualShipping.contains("R25.00"),
@@ -120,7 +120,7 @@ public class InventoryTest extends Base {
     @Test(priority = 10, dependsOnMethods = "testExpressShipping")
     public void testOneYearWarranty() throws InterruptedException {
         inventoryPage.selectOneYearWarranty();
-        Thread.sleep(1500);
+        Thread.sleep(2000);
 
         String actualWarrantyFee = inventoryPage.getWarrantyAmount();
         Assert.assertTrue(actualWarrantyFee.contains("R49.00"),
@@ -148,7 +148,7 @@ public class InventoryTest extends Base {
     @Test(priority = 12, dependsOnMethods = "testApplyDiscount")
     public void testConfirmPurchase() throws InterruptedException {
         inventoryPage.clickConfirmPurchase();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         Assert.assertTrue(inventoryPage.isSuccessToastDisplayed(),
                 "Success pop-up did not appear!");
@@ -161,7 +161,7 @@ public class InventoryTest extends Base {
     @Test(priority = 13, dependsOnMethods = "testConfirmPurchase")
     public void testViewInvoiceHistory() throws InterruptedException {
         inventoryPage.clickViewInvoice();
-        Thread.sleep(1500);
+        Thread.sleep(2000);
 
         Assert.assertTrue(inventoryPage.isInvoiceHistoryPanelDisplayed(),
                 "Invoice History panel did not appear after clicking View Invoice!");
@@ -172,7 +172,7 @@ public class InventoryTest extends Base {
     public void testVerifyFinalInvoice() throws InterruptedException {
         String mainWindow = driver.getWindowHandle();
         inventoryPage.clickViewInHistory();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         for (String windowHandle : driver.getWindowHandles()) {
             if (!windowHandle.equals(mainWindow)) {
