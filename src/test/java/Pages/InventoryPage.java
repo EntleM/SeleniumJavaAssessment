@@ -223,4 +223,18 @@ public class InventoryPage {
     public boolean isInvoiceHistoryPanelDisplayed() {
         return invoiceHistoryPanel.isDisplayed() && invoiceHistoryHeader.isDisplayed();
     }
+
+    @FindBy(css = "button[id^='view-invoice-']")
+    private WebElement viewInvoiceInListBtn;
+
+    @FindBy(className = "invoice-info")
+    private WebElement invoiceInfo;
+
+    public void clickViewInHistory() {
+        viewInvoiceInListBtn.click();
+    }
+
+    public boolean isInvoiceDocumentDisplayed() {
+        return invoiceInfo.isDisplayed();
+    }
 }

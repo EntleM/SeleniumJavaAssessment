@@ -159,12 +159,30 @@ public class InventoryTest extends Base {
     }
 
     @Test(priority = 13, dependsOnMethods = "testConfirmPurchase")
-    public void test4ViewInvoiceHistory() throws InterruptedException {
+    public void testViewInvoiceHistory() throws InterruptedException {
         inventoryPage.clickViewInvoice();
         Thread.sleep(1500);
 
         Assert.assertTrue(inventoryPage.isInvoiceHistoryPanelDisplayed(),
                 "Invoice History panel did not appear after clicking View Invoice!");
         System.out.println("Invoice History panel is visible.");
+    }
+
+    @Test(priority = 14, dependsOnMethods = "testViewInvoiceHistory")
+    public void testVerifyFinalInvoice() throws InterruptedException {
+        String mainWindow = driver.getWindowHandle();
+        inventoryPage.clickViewInHistory();
+        Thread.sleep(3000);
+
+        for (String windowHandle : driver.getWindowHandles()) {
+            if (!windowHandle.equals(mainWindow)) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
+
+        Assert.assertTrue(inventoryPage.isInvoiceDocumentDisplayed(),
+                "The final invoice document did not display in the new tab!");
+        System.out.println("Invoice opened successfully in a new tab.");
     }
 }
